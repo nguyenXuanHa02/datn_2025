@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1068552120940",
+    "project_id": "kichikichi-3472d",
+    "storage_bucket": "kichikichi-3472d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068552120940:android:65afdf167699db0f740649",
+        "android_client_info": {
+          "package_name": "com.kichikichi.kichikichi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7jbzHVdoB6OGh1bPO-ZIQ8iqbOApbyyM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
