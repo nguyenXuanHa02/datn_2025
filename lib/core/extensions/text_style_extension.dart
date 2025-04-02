@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
+const String emptyText = '--';
+
 extension TextStyleExtension on TextStyle {
   Widget text(
-    String content, {
+    String? content, {
     TextAlign? align,
     int? maxLines,
     TextOverflow overflow = TextOverflow.ellipsis,
   }) {
     return Text(
-      content,
+      content ?? emptyText,
       style: this,
       textAlign: align,
       maxLines: maxLines,

@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-class AppSize {
+abstract class AppSize {
   static late double screenWidth;
   static late double screenHeight;
 

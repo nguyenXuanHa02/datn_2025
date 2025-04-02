@@ -15,10 +15,14 @@ class CodegenLoader extends AssetLoader{
   }
 
   static const Map<String,dynamic> _en_EN = {
-  "access_denied": "Không có quyền truy cập!"
+  "access_denied": "Không có quyền truy cập!",
+  "access_denied_message": "You do not have permission to access this page.",
+  "mon_an_noi_bat": "Món ăn nổi bật"
 };
 static const Map<String,dynamic> _vi_VN = {
-  "access_denied": "Access denied!"
+  "access_denied": "Không có quyền truy cập!",
+  "access_denied_message": "You do not have permission to access this page.",
+  "mon_an_noi_bat": "Món ăn nổi bật"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en_EN": _en_EN, "vi_VN": _vi_VN};
 }

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kichikichi/generated/locale_keys.g.dart';
 
@@ -6,7 +7,7 @@ class ForbiddenPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(LocaleKeys.access_denied),
+        title: Text(LocaleKeys.access_denied.tr()),
         backgroundColor: Colors.red,
       ),
       body: const Center(

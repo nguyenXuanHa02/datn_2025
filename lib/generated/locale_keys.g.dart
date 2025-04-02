@@ -5,5 +5,6 @@
 abstract class  LocaleKeys {
   static const access_denied = 'access_denied';
   static const access_denied_message = 'access_denied_message';
+  static const mon_an_noi_bat = 'mon_an_noi_bat';
 
 }
