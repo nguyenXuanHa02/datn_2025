@@ -5,7 +5,7 @@ import 'package:kichikichi/core/routers/route_generator.dart';
 import 'package:kichikichi/core/styles/colors/app_colors.dart';
 import 'package:kichikichi/core/styles/theme.dart';
 import 'package:kichikichi/generated/codegen_loader.g.dart';
-import 'package:kichikichi/roles/customer/start_page.dart';
+import 'package:kichikichi/roles/start_page.dart';
 
 import 'commons/widgets/dish_item.dart';
 

@@ -11,9 +11,9 @@ class MIconButton extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 1,
         child: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             shape: BoxShape.rectangle,
-            color: Colors.blue,
+            color: data['background'] as Color? ?? Colors.blue,
           ),
           child: Center(child: Text(data['title'] ?? '')),
         ),

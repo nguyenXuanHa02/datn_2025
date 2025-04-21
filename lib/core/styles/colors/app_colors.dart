@@ -10,6 +10,7 @@ class AppColors {
   // Background & Surface
   static const Color background = Color(0xFFFFF8E1); // Soft Creamy White
   static const Color card = Color(0xFFFFFFFF); // Pure White for Cards
+  static const Color onPrimary = Color(0xFFFFFFFF); // Pure White for Cards
   static const Color border = Color(0xFFE0E0E0); // Light Grey for Borders
 
   // Text Colors

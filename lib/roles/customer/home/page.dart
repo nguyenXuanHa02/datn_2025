@@ -25,7 +25,16 @@ class CustomerHomePage extends StatelessWidget {
                 AppSize.paddingMedium.h,
                 Row(
                   children: [
-                    Expanded(child: MIconButton(onTap: () {}, data: {})),
+                    Expanded(
+                        child: MIconButton(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pushNamed(RouteCons.customerHomeScan);
+                            },
+                            data: {
+                          'title': 'Order',
+                          'background': Colors.orange
+                        })),
                     AppSize.paddingMedium.w,
                     Expanded(
                         child: MIconButton(
