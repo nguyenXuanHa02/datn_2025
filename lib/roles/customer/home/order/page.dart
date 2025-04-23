@@ -10,6 +10,8 @@ class CustomerHomeOrder extends StatefulWidget {
 }
 
 class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
+  Map<int, int> counter = {};
+  int money = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,15 +22,34 @@ class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
         body: Column(
           children: [
             Expanded(
-              child: const DishGridWithData(
+              child: DishGridWithData(
                 // physics: NeverScrollableScrollPhysics(),
+                onCountChange: (item, count) {
+                  if (item['id'] != null) {
+                    counter[item['id']] = int.parse(item['price']) * count;
+                    int temp = 0;
+                    for (var element in counter.values) {
+                      temp += element;
+                    }
+                    money = temp;
+                    setState(() {});
+                  }
+                },
                 items: [
-                  {'title': 'nấm kim châm'},
-                  {'title': 'sách bò'},
-                  {'title': 'thịt bò nhật bản'},
-                  {'title': 'nấm kim châm'},
-                  {'title': 'sách bò'},
-                  {'title': 'thịt bò nhật bản thịt bò nhật bản'},
+                  {
+                    'id': 1,
+                    'title': 'nấm kim châm vào chim',
+                    'price': '100000'
+                  },
+                  {'id': 2, 'title': 'sách bò', 'price': '100000'},
+                  {'id': 3, 'title': 'thịt bò nhật bản', 'price': '100000'},
+                  {'id': 4, 'title': 'nấm kim châm', 'price': '100000'},
+                  {'id': 5, 'title': 'sách bò', 'price': '100000'},
+                  {
+                    'id': 6,
+                    'title': 'thịt bò nhật bản thịt bò nhật bản',
+                    'price': '100000'
+                  },
                 ],
               ),
             ),
@@ -36,7 +57,8 @@ class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
             Row(
               children: [
                 Expanded(
-                    child: FilledButton(onPressed: () {}, child: Text("data")))
+                    child:
+                        FilledButton(onPressed: () {}, child: Text("$money")))
               ],
             ).paddingSymmetric(h: 16),
             AppSize.paddingSmall.h,

@@ -76,6 +76,17 @@ class _CustomerHomeScanState extends State<CustomerHomeScan> {
             icon: const Icon(Icons.switch_camera),
             onPressed: () => controller.switchCamera(),
           ),
+          DebugButton(
+            () async {
+              final tableData = await checkQrCode('lol');
+              if (tableData['table_code'] != null && context.mounted) {
+                controller.stop();
+                Navigator.pushReplacementNamed(
+                    context, RouteCons.customerHomeOrder,
+                    arguments: tableData);
+              }
+            },
+          )
         ],
       ),
       body: MobileScanner(

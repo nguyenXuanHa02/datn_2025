@@ -34,17 +34,5 @@ class BaseBloc<T> extends Bloc<BaseEvent, BaseState<T>> {
     if (initFields != null) {
       this.fields = initFields;
     }
-    on<UpdateField>(
-      (event, emit) {
-        emit(this.state);
-      },
-    );
   }
-}
-
-class ReaB<List> extends BaseBloc<List> {
-  ReaB()
-      : super(
-          'asdfas',
-        );
 }

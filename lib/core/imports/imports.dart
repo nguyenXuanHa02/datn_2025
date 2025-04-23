@@ -1,5 +1,6 @@
 export 'package:flutter/material.dart';
 export 'package:flutter/widgets.dart';
+export 'package:kichikichi/commons/widgets/debug_widget.dart';
 export 'package:kichikichi/commons/widgets/header.dart';
 export 'package:kichikichi/core/base_widget/base_grid_view.dart';
 export 'package:kichikichi/core/base_widget/image_viewer.dart';

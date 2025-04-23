@@ -18,7 +18,9 @@ class DishGridWithData extends StatelessWidget {
       this.crossCount,
       this.shrinkWrap,
       this.onItemTap,
-      this.physics});
+      this.physics,
+      this.onCountChange});
+  final Function(Map, int)? onCountChange;
 
   final List<Map> items;
   final int? crossCount;
@@ -45,6 +47,7 @@ class DishGridWithData extends StatelessWidget {
         },
         child: DishItem(
           data: items[index],
+          onCountChange: onCountChange,
         ),
       ),
       itemCount: items.length,
