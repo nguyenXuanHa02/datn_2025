@@ -1,4 +1,5 @@
 import 'package:kichikichi/core/imports/imports.dart';
+import 'package:kichikichi/roles/customer/home/order/confirm/page.dart';
 
 class CustomerHomeOrder extends StatefulWidget {
   const CustomerHomeOrder(this.data, {super.key});
@@ -11,7 +12,9 @@ class CustomerHomeOrder extends StatefulWidget {
 
 class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
   Map<int, int> counter = {};
+  Map<int, dynamic> order = {};
   int money = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,12 +24,16 @@ class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
         ),
         body: Column(
           children: [
+            AppSize.paddingSmall.h,
             Expanded(
               child: DishGridWithData(
                 // physics: NeverScrollableScrollPhysics(),
                 onCountChange: (item, count) {
                   if (item['id'] != null) {
+                    var gems = item;
+                    gems['count'] = count;
                     counter[item['id']] = int.parse(item['price']) * count;
+                    order[item['id']] = gems;
                     int temp = 0;
                     for (var element in counter.values) {
                       temp += element;
@@ -66,7 +73,17 @@ class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
               children: [
                 Expanded(
                     child: FilledButton(
-                        onPressed: () {}, child: const Text("Tiếp tục")))
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => CustomerHomeConfirmPage(
+                                data: {
+                                  'table': widget.data,
+                                  'orderData': order,
+                                  'total': money
+                                }),
+                          ));
+                        },
+                        child: const Text("Tiếp tục")))
               ],
             ).paddingSymmetric(h: 16),
             AppSize.paddingSmall.h,

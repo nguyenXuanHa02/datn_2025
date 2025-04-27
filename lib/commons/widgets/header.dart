@@ -43,7 +43,13 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                     AppColors.onPrimary, BlendMode.srcIn),
               ),
             )
-          : IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back)),
+          : showBackButton
+              ? IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(Icons.arrow_back))
+              : const SizedBox.shrink(),
       centerTitle: centerTitle ?? true,
       // backgroundColor: App,
       // foregroundColor: Colors.black,
