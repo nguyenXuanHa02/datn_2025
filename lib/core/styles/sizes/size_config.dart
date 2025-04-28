@@ -24,6 +24,12 @@ abstract class AppSize {
   static const double iconSizeLarge = 40;
 
   // Dynamic sizes (relative to screen width)
-  static double w(double value) => screenWidth * (value / 100);
-  static double h(double value) => screenHeight * (value / 100);
+  // static double w(double value) => screenWidth * (value / 100);
+  // static double h(double value) => screenHeight * (value / 100);
+  static Widget w(double value) => SizedBox(
+        width: value,
+      );
+  static Widget h(double value) => SizedBox(
+        height: value,
+      );
 }

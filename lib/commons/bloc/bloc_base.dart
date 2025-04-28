@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum BlocState { init, loading, success, fail }
+enum BaseStateEntry { init, loading, success, fail }
 
 sealed class BaseState<T> extends Equatable {
-  final BlocState state;
+  final BaseStateEntry state;
   final T? data;
 
   const BaseState(this.state, this.data);
@@ -14,7 +14,7 @@ sealed class BaseState<T> extends Equatable {
 }
 
 class InitialState<T> extends BaseState<T> {
-  const InitialState() : super(BlocState.init, null);
+  const InitialState() : super(BaseStateEntry.init, null);
 }
 
 sealed class BaseEvent {}

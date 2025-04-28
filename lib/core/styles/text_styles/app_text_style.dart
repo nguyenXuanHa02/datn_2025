@@ -12,6 +12,11 @@ abstract class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: Colors.black87,
   );
+  static const TextStyle heading3 = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+    color: Colors.black87,
+  );
 
   static const TextStyle bodyText = TextStyle(
     fontSize: 16,

@@ -53,14 +53,14 @@ class _DishItemState extends State<DishItem> {
                     ),
             ),
             Flexible(
-              flex: 4,
+              flex: havePrice || showCountChange ? 4 : 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: (havePrice && showCountChange)
                     ? [
                         Flexible(
                           flex: 4,
-                          child: AppTextStyles.heading2
+                          child: AppTextStyles.heading3
                               .text(widget.data['price'])
                               .paddingSymmetric(
                                 h: AppSize.paddingSmall,

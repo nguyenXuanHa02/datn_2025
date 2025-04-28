@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kichikichi/core/styles/colors/app_colors.dart';
 import 'package:kichikichi/core/styles/text_styles/app_text_style.dart';
@@ -108,4 +109,44 @@ class AppTheme {
       ),
     ),
   );
+}
+
+class DateTimeUtils {
+  static final DateFormat _formatter = DateFormat('yyyy-MM-dd HH:mm');
+
+  /// Parse từ String -> DateTime
+  static DateTime parse(String input) {
+    return _formatter.parseStrict(input); // Strict để tránh lỗi vớ vẩn
+  }
+
+  /// Format từ DateTime -> String
+  static String format(DateTime dateTime) {
+    return _formatter.format(dateTime);
+  }
+
+  static DateTime roundToQuarterHour(DateTime dateTime) {
+    int minute = dateTime.minute;
+
+    // Tính phút gần nhất theo 15 phút
+    int roundedMinutes = ((minute + 7) ~/ 15) * 15;
+
+    if (roundedMinutes == 60) {
+      // Nếu quá 60 phút thì cộng thêm 1 giờ
+      return DateTime(
+        dateTime.year,
+        dateTime.month,
+        dateTime.day,
+        dateTime.hour + 1,
+        0,
+      );
+    } else {
+      return DateTime(
+        dateTime.year,
+        dateTime.month,
+        dateTime.day,
+        dateTime.hour,
+        roundedMinutes,
+      );
+    }
+  }
 }
