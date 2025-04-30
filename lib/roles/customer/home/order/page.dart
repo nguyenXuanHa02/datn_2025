@@ -61,19 +61,22 @@ class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
               ),
             ),
             AppSize.paddingSmall.h,
-            Row(
-              children: [
-                Expanded(
-                    child:
-                        FilledButton(onPressed: () {}, child: Text("$money")))
-              ],
-            ).paddingSymmetric(h: 16),
+            RoundedButton.text(
+              "$money vnd",
+              () {},
+            ).padSymmetric(h: 16).animate().fadeIn(duration: 300.ms).slide(
+                  begin: const Offset(0, 2),
+                  duration: 350.ms,
+                ),
             AppSize.paddingSmall.h,
-            Row(
-              children: [
-                Expanded(
-                    child: FilledButton(
-                        onPressed: () {
+            if (money > 0)
+              Builder(builder: (context) {
+                return Row(
+                  children: [
+                    Expanded(
+                      child: RoundedButton.text(
+                        'Tiếp tục',
+                        () {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => CustomerHomeConfirmPage(
                                 data: {
@@ -83,9 +86,14 @@ class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
                                 }),
                           ));
                         },
-                        child: const Text("Tiếp tục")))
-              ],
-            ).paddingSymmetric(h: 16),
+                      ),
+                    )
+                  ],
+                ).padSymmetric(h: 16).animate().fadeIn(duration: 300.ms).slide(
+                      begin: const Offset(0, 2),
+                      duration: 250.ms,
+                    );
+              }),
             AppSize.paddingSmall.h,
           ],
         ));

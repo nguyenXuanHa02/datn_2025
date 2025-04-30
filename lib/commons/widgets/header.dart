@@ -7,6 +7,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton, centerTitle;
   final List<Widget>? actions;
   final bool backToHome;
+  final Function()? onBackPress;
   const Header({
     Key? key,
     required this.title,
@@ -14,6 +15,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
     this.backToHome = false,
     this.centerTitle = false,
     this.actions,
+    this.onBackPress,
   }) : super(key: key);
 
   @override
@@ -45,9 +47,10 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
             )
           : showBackButton
               ? IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: onBackPress ??
+                      () {
+                        Navigator.of(context).pop();
+                      },
                   icon: const Icon(Icons.arrow_back))
               : const SizedBox.shrink(),
       centerTitle: centerTitle ?? true,

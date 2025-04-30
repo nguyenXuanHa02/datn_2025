@@ -9,6 +9,7 @@ Widget textFieldWith<T extends BaseController>(String key,
     Get.isRegistered<T>()
         ? GetBuilder<T>(
             builder: (controller) => TextFormField(
+              controller: TextEditingController(text: controller.fields[key]),
               onChanged: (value) {
                 controller[key] = value;
                 controller.validate();

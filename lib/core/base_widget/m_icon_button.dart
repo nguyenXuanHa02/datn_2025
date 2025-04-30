@@ -2,8 +2,10 @@ import 'package:kichikichi/core/imports/imports.dart';
 
 class MIconButton extends StatelessWidget {
   const MIconButton({super.key, required this.onTap, required this.data});
+
   final Function() onTap;
   final Map data;
+
   @override
   Widget build(BuildContext context) {
     return AppSize.radiusSmall.roundedAll(InkWell(
@@ -24,8 +26,12 @@ class MIconButton extends StatelessWidget {
 
 class RoundedButton extends StatelessWidget {
   const RoundedButton({super.key, required this.onTap, required this.data});
+
+  RoundedButton.text(String text, this.onTap, {super.key})
+      : data = {'title': text};
   final Function() onTap;
   final Map data;
+
   @override
   Widget build(BuildContext context) {
     return AppSize.radiusSmall.roundedAll(InkWell(

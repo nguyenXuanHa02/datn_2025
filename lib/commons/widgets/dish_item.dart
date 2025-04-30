@@ -45,7 +45,7 @@ class _DishItemState extends State<DishItem> {
                             left: 0,
                             child: AppTextStyles.heading2
                                 .text(widget.data['title'], maxLines: 2)
-                                .paddingSymmetric(h: AppSize.paddingSmall))
+                                .padSymmetric(h: AppSize.paddingSmall))
                       ],
                     )
                   : ImageViewer(
@@ -62,7 +62,7 @@ class _DishItemState extends State<DishItem> {
                           flex: 4,
                           child: AppTextStyles.heading3
                               .text(widget.data['price'])
-                              .paddingSymmetric(
+                              .padSymmetric(
                                 h: AppSize.paddingSmall,
                                 v: AppSize.paddingSmall,
                               ),
@@ -76,12 +76,12 @@ class _DishItemState extends State<DishItem> {
                         AppSize.paddingSmall.h,
                         AppTextStyles.bodyText
                             .text(widget.data['title'])
-                            .paddingSymmetric(h: AppSize.paddingSmall),
+                            .padSymmetric(h: AppSize.paddingSmall),
                         AppSize.paddingSmall.h,
                         if (widget.data['price'] is String) ...[
                           AppTextStyles.bodyText
                               .text(widget.data['price'])
-                              .paddingSymmetric(h: AppSize.paddingSmall),
+                              .padSymmetric(h: AppSize.paddingSmall),
                           AppSize.paddingSmall.h,
                         ]
                       ],
@@ -108,7 +108,7 @@ class _DishItemState extends State<DishItem> {
                   }
                 },
                 icon: const Icon(Icons.add))),
-        AppTextStyles.heading2.text('$count').paddingAll(4),
+        AppTextStyles.heading2.text('$count').padAll(4),
         Expanded(
             child: IconButton(
                 onPressed: () {

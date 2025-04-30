@@ -32,4 +32,8 @@ abstract class AppSize {
   static Widget h(double value) => SizedBox(
         height: value,
       );
+  static Widget get h16 => h(16);
+  static Widget get h8 => h(8);
+  static Widget get w8 => w(8);
+  static Widget get w16 => w(16);
 }

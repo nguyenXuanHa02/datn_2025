@@ -49,7 +49,9 @@ class DishGridWithData extends StatelessWidget {
           data: items[index],
           onCountChange: onCountChange,
         ),
-      ),
+      ).animate().fadeIn(duration: 350.ms + 50.ms * index).slide(
+          begin: (index % 2 == 0) ? const Offset(-2, 1) : const Offset(2, 1),
+          duration: 350.ms),
       itemCount: items.length,
     );
   }
