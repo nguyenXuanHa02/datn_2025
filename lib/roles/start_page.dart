@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kichikichi/commons/default/forbidden.dart';
+import 'package:kichikichi/roles/account/page.dart';
 import 'package:kichikichi/roles/customer/home/page.dart';
 import 'package:kichikichi/widgets/customer_bottom_nav.dart';
 
@@ -20,12 +20,7 @@ class _CustomerStartPageState extends State<CustomerStartPage> {
     return Scaffold(
       body: IndexedStack(
         index: bottomBarIndex,
-        children: [
-          const CustomerHomePage(),
-          ForbiddenPage(),
-          Container(),
-          Container(),
-        ],
+        children: const [CustomerHomePage(), AccountPage()],
       ),
       bottomNavigationBar: customerBottomNav(
         bottomBarIndex,

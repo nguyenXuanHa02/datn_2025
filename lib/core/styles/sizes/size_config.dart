@@ -33,6 +33,8 @@ abstract class AppSize {
         height: value,
       );
   static Widget get h16 => h(16);
+  static Widget get h32 => h(32);
+  static Widget get h64 => h(64);
   static Widget get h8 => h(8);
   static Widget get w8 => w(8);
   static Widget get w16 => w(16);

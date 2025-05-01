@@ -5,11 +5,16 @@ import 'package:kichikichi/core/styles/theme.dart';
 import '../imports/imports.dart';
 
 Widget textFieldWith<T extends BaseController>(String key,
-        {String? label, TextInputType? keyType}) =>
+        {String? label,
+        TextInputType? keyType,
+        bool haveInitValue = false,
+        bool isPass = false}) =>
     Get.isRegistered<T>()
         ? GetBuilder<T>(
             builder: (controller) => TextFormField(
-              controller: TextEditingController(text: controller.fields[key]),
+              controller: (haveInitValue)
+                  ? TextEditingController(text: controller.fields[key])
+                  : null,
               onChanged: (value) {
                 controller[key] = value;
                 controller.validate();
@@ -18,6 +23,7 @@ Widget textFieldWith<T extends BaseController>(String key,
                 labelText: label ?? key,
                 errorText: controller.error[key],
               ),
+              obscureText: isPass,
               keyboardType: keyType ?? TextInputType.text,
             ),
           )
