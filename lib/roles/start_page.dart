@@ -4,7 +4,7 @@ import 'package:kichikichi/roles/account/controller.dart';
 import 'package:kichikichi/roles/account/page.dart';
 import 'package:kichikichi/roles/customer/home/page.dart';
 import 'package:kichikichi/roles/manager/page.dart';
-import 'package:kichikichi/roles/staff/pay/page.dart';
+import 'package:kichikichi/roles/staff/page.dart';
 import 'package:kichikichi/widgets/customer_bottom_nav.dart';
 
 class CustomerStartPage extends StatefulWidget {
@@ -32,7 +32,7 @@ class _CustomerStartPageState extends State<CustomerStartPage> {
               (p0.currentRole == AccountRole.manager)
                   ? const ManagerPage()
                   : (p0.currentRole == AccountRole.staff)
-                      ? UserInformation()
+                      ? const StaffPage()
                       : const CustomerHomePage(),
               const AccountPage()
             ],

@@ -1,6 +1,7 @@
 import 'package:kichikichi/commons/bloc/baseController.dart';
 import 'package:kichikichi/core/imports/imports.dart';
 import 'package:kichikichi/roles/manager/controller.dart';
+import 'package:kichikichi/roles/manager/revenue/page.dart';
 
 class ManagerPage extends StatelessWidget {
   const ManagerPage({super.key});
@@ -17,7 +18,11 @@ class ManagerPage extends StatelessWidget {
                 children: [
                   RoundedButton.text(
                     'Quản lý doanh thu',
-                    () {},
+                    () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const RevenuePage(),
+                      ));
+                    },
                   ),
                   AppSize.h8,
                   RoundedButton.text(

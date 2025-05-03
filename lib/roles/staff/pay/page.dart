@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kichikichi/commons/bloc/baseController.dart';
 import 'package:kichikichi/core/imports/imports.dart';
 
-class UserInformation extends StatefulWidget {
+class StaffPayPage extends StatefulWidget {
   @override
-  _UserInformationState createState() => _UserInformationState();
+  _StaffPayPageState createState() => _StaffPayPageState();
 }
 
-class _UserInformationState extends State<UserInformation> {
+class _StaffPayPageState extends State<StaffPayPage> {
   final Stream<QuerySnapshot> _usersStream =
       FirebaseFirestore.instance.collection('orders').snapshots();
 
