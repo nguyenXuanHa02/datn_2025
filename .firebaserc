@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "kichikichi-3472d"
-  }
+    "product": "pj1firebase",
+    "main": "pj1firebase"
+  },
+  "targets": {},
+  "etags": {}
 }

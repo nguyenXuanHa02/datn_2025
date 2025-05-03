@@ -11,8 +11,10 @@ import 'package:kichikichi/roles/start_page.dart';
 import 'commons/widgets/dish_item.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  await WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+
+  // WebViewPlatform.instance = AndroidWebViewPlatform();
   await Firebase.initializeApp();
   await Future.delayed(const Duration(milliseconds: 100));
   runApp(EasyLocalization(

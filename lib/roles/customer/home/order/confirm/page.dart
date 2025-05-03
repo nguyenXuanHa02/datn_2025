@@ -16,7 +16,8 @@ class CustomerHomeConfirmPage extends StatelessWidget {
     final orderData = (data['orderData'] as Map<int, dynamic>);
 
     return GetBuilder<CustomerHomeOrderConfirmController>(
-        init: CustomerHomeOrderConfirmController(oderStartData: orderData),
+        init: CustomerHomeOrderConfirmController(
+            oderStartData: orderData, tableData: data['table']),
         builder: (controller) {
           return Scaffold(
             appBar: Header(

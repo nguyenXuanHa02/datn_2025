@@ -28,11 +28,11 @@ class CustomerPreorderCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Mã bàn $code',
-                  style: AppTextStyles.heading2,
-                ),
-                AppSize.h8,
+                // Text(
+                //   'Mã bàn $code',
+                //   style: AppTextStyles.heading2,
+                // ),
+                // AppSize.h8,
                 Text(
                   'Người đặt $name',
                   style: AppTextStyles.heading3,

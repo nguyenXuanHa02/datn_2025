@@ -17,6 +17,7 @@ enum CustomerHomePreorderControllerState {
 class CustomerHomePreorderController extends BaseController {
   CustomerHomePreorderControllerState showing =
       CustomerHomePreorderControllerState.start;
+
   @override
   void validate() {
     require('name');
@@ -38,15 +39,24 @@ class CustomerHomePreorderController extends BaseController {
   Future<void> preorder() async {
     validate();
     if (!fieldError) {
-      //todo
       showLoading();
-      await Future.delayed(500.ms);
+      try {
+        final response =
+            await DioClient().dio.post('/customer/preorder', data: {
+          "customerName": fields['name'],
+          "phoneNumber": fields['phone'],
+          "numberOfGuests": fields['count'],
+          "arrivalTime":
+              DateTimeUtils.parse(fields['pickupTime']).toIso8601String(),
+        });
+      } catch (e) {}
+
       card = {
         'code': 'a',
-        'name': 'a',
-        'phone': 'a',
-        'count': 'a',
-        'pickupTime': DateTimeUtils.format(DateTime.now()),
+        'name': fields['name'],
+        'phone': fields['phone'],
+        'count': fields['count'],
+        'pickupTime': fields['pickupTime'],
       };
       await saveLocal('card', jsonEncode(card));
       hireLoading();
@@ -76,7 +86,7 @@ class CustomerHomePreorderController extends BaseController {
   }
 
   void saveChangePreorder() {
-    showing = CustomerHomePreorderControllerState.thanhcong;
+    preorder();
     update();
   }
 

@@ -13,7 +13,57 @@ class AccountPage extends StatelessWidget {
     return BaseScaffold<AccountController>(
       init: AccountController(),
       (controller) {
+        final manager = Builder(
+          builder: (context) {
+            return Scaffold(
+              body: Column(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        AccountUserInfo(
+                          user: controller.accountData,
+                        )
+                      ],
+                    ),
+                  ),
+                  RoundedButton.text(
+                    'Đăng xuất',
+                    () {
+                      controller.dangXuat();
+                    },
+                  )
+                ],
+              ).safePad(),
+            );
+          },
+        );
         final customer = Builder(
+          builder: (context) {
+            return Scaffold(
+              body: Column(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        AccountUserInfo(
+                          user: controller.accountData,
+                        )
+                      ],
+                    ),
+                  ),
+                  RoundedButton.text(
+                    'Đăng xuất',
+                    () {
+                      controller.dangXuat();
+                    },
+                  )
+                ],
+              ).safePad(),
+            );
+          },
+        );
+        final staff = Builder(
           builder: (context) {
             return Scaffold(
               body: Column(
@@ -42,14 +92,10 @@ class AccountPage extends StatelessWidget {
           return customer;
         }
         if (controller.currentRole == AccountRole.staff) {
-          return Scaffold(
-            body: Text('customer'),
-          );
+          return staff;
         }
         if (controller.currentRole == AccountRole.manager) {
-          return Scaffold(
-            body: Text('customer'),
-          );
+          return manager;
         }
         final guestPage = Builder(
           builder: (context) => Scaffold(

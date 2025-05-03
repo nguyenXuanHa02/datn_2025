@@ -1,13 +1,32 @@
 {
   "project_info": {
-    "project_number": "1068552120940",
-    "project_id": "kichikichi-3472d",
-    "storage_bucket": "kichikichi-3472d.firebasestorage.app"
+    "project_number": "606243318992",
+    "project_id": "pj1firebase",
+    "storage_bucket": "pj1firebase.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1068552120940:android:65afdf167699db0f740649",
+        "mobilesdk_app_id": "1:606243318992:android:889ce8f1bf97deda2602d5",
+        "android_client_info": {
+          "package_name": "com.hanxdev.project_outsource_pre_build.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoFOqNVIx8SvlpSi1ycgIXFH_XEdIombo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606243318992:android:75ecd6af12c32a1e2602d5",
         "android_client_info": {
           "package_name": "com.kichikichi.kichikichi"
         }
@@ -15,7 +34,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA7jbzHVdoB6OGh1bPO-ZIQ8iqbOApbyyM"
+          "current_key": "AIzaSyCoFOqNVIx8SvlpSi1ycgIXFH_XEdIombo"
         }
       ],
       "services": {

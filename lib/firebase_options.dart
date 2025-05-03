@@ -44,39 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB-x-4K9bMTraX1BkFZfBI4BRYuHL3Rfbk',
-    appId: '1:1068552120940:web:0df306517f229a7f740649',
-    messagingSenderId: '1068552120940',
-    projectId: 'kichikichi-3472d',
-    authDomain: 'kichikichi-3472d.firebaseapp.com',
-    storageBucket: 'kichikichi-3472d.firebasestorage.app',
-    measurementId: 'G-JF4WFD82MF',
+    apiKey: 'AIzaSyCjP9DraHsQt9C2JfB8658f4A2wXQ1dCf0',
+    appId: '1:606243318992:web:34c2ff77b3f2e6392602d5',
+    messagingSenderId: '606243318992',
+    projectId: 'pj1firebase',
+    authDomain: 'pj1firebase.firebaseapp.com',
+    storageBucket: 'pj1firebase.appspot.com',
+    measurementId: 'G-XX2MW7SG4W',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA7jbzHVdoB6OGh1bPO-ZIQ8iqbOApbyyM',
-    appId: '1:1068552120940:android:65afdf167699db0f740649',
-    messagingSenderId: '1068552120940',
-    projectId: 'kichikichi-3472d',
-    storageBucket: 'kichikichi-3472d.firebasestorage.app',
+    apiKey: 'AIzaSyCoFOqNVIx8SvlpSi1ycgIXFH_XEdIombo',
+    appId: '1:606243318992:android:75ecd6af12c32a1e2602d5',
+    messagingSenderId: '606243318992',
+    projectId: 'pj1firebase',
+    storageBucket: 'pj1firebase.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDNKzKMKdmLJCvYeXDLcns2mbJ1px1F_rQ',
-    appId: '1:1068552120940:ios:c07abaa2aa5eb329740649',
-    messagingSenderId: '1068552120940',
-    projectId: 'kichikichi-3472d',
-    storageBucket: 'kichikichi-3472d.firebasestorage.app',
+    apiKey: 'AIzaSyAGtCGGAGivFlVl8QLTaM6IbpORsGdCfeQ',
+    appId: '1:606243318992:ios:4dbd53e6cabc4aa22602d5',
+    messagingSenderId: '606243318992',
+    projectId: 'pj1firebase',
+    storageBucket: 'pj1firebase.appspot.com',
     iosBundleId: 'com.kichikichi.kichikichi',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyB-x-4K9bMTraX1BkFZfBI4BRYuHL3Rfbk',
-    appId: '1:1068552120940:web:0be1ce62a4aff4fe740649',
-    messagingSenderId: '1068552120940',
-    projectId: 'kichikichi-3472d',
-    authDomain: 'kichikichi-3472d.firebaseapp.com',
-    storageBucket: 'kichikichi-3472d.firebasestorage.app',
-    measurementId: 'G-45LSS74K7C',
+    apiKey: 'AIzaSyC0TxIpMHE5tMlN8BgcBpV2yL52zaVfSF4',
+    appId: '1:606243318992:web:9a6771b940336d4d2602d5',
+    messagingSenderId: '606243318992',
+    projectId: 'pj1firebase',
+    authDomain: 'pj1firebase.firebaseapp.com',
+    storageBucket: 'pj1firebase.appspot.com',
+    measurementId: 'G-SW9YKSL0WY',
   );
+
 }

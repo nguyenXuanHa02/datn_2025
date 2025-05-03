@@ -1,16 +1,18 @@
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
+import 'package:kichikichi/commons/bloc/baseController.dart';
 import 'package:kichikichi/core/imports/imports.dart';
 import 'package:kichikichi/core/styles/colors/app_colors.dart';
 import 'package:kichikichi/roles/customer/home/order/confirm/controller.dart';
+import 'package:kichikichi/roles/customer/home/order/confirm/success/webview.dart';
 
 class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
   const CustomerHomeOrderConfirmSuccessPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CustomerHomeOrderConfirmController>(
-        builder: (controller) {
+    return BaseScaffold<CustomerHomeOrderConfirmController>(showLoading: true,
+        (controller) {
+      print(controller.showing.name);
       final onStart = Builder(builder: (context) {
         return Column(
           children: [
@@ -354,6 +356,17 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
             child: thanhtoanthanhcong,
           ),
         );
+      }
+      if (controller.showing == CustomerHomeOrderConfirmState.thanhToanStart &&
+          controller.paymentUrl.isNotEmpty) {
+        return Builder(builder: (context) {
+          return Webview(
+            url: controller.paymentUrl,
+            onSuccess: (Map map) {
+              controller.onPayResult(map);
+            },
+          );
+        });
       }
       final goiNhanVienThanhCong = Builder(
         builder: (context) => Scaffold(
