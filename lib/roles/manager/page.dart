@@ -2,6 +2,7 @@ import 'package:kichikichi/commons/bloc/baseController.dart';
 import 'package:kichikichi/core/imports/imports.dart';
 import 'package:kichikichi/roles/manager/controller.dart';
 import 'package:kichikichi/roles/manager/revenue/page.dart';
+import 'package:kichikichi/roles/manager/staffmanage/page.dart';
 
 class ManagerPage extends StatelessWidget {
   const ManagerPage({super.key});
@@ -27,7 +28,11 @@ class ManagerPage extends StatelessWidget {
                   AppSize.h8,
                   RoundedButton.text(
                     'Quản lý tài khoản nhân viên',
-                    () {},
+                    () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ManagerCreateStaffPage(),
+                      ));
+                    },
                   ),
                   AppSize.h8,
                   // RoundedButton.text(
