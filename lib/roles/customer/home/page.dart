@@ -73,18 +73,13 @@ class CustomerHomePage extends StatelessWidget {
                           AppSize.paddingMedium.h,
                           AppTextStyles.heading2.text('mon_an_noi_bat'),
                           AppSize.paddingSmall.h,
-                          const DishGridWithData(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            items: [
-                              {'title': 'nấm kim châm'},
-                              {'title': 'sách bò'},
-                              {'title': 'thịt bò nhật bản'},
-                              {'title': 'nấm kim châm'},
-                              {'title': 'sách bò'},
-                              {'title': 'thịt bò nhật bản thịt bò nhật bản'},
-                            ],
-                          )
+                          (controller.items.isNotEmpty)
+                              ? DishGridWithData(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  items: controller.items,
+                                )
+                              : const CircularProgressIndicator()
                         ],
                       ),
                     ),

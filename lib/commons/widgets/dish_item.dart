@@ -1,4 +1,5 @@
 import 'package:kichikichi/core/imports/imports.dart';
+import 'package:kichikichi/core/styles/colors/app_colors.dart';
 
 class DishItem extends StatefulWidget {
   const DishItem({super.key, required this.data, this.onCountChange});
@@ -26,7 +27,7 @@ class _DishItemState extends State<DishItem> {
   Widget build(BuildContext context) {
     return AppSize.radiusMedium.roundedAll(
       Container(
-        color: Colors.green,
+        color: AppColors.background,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -38,19 +39,18 @@ class _DishItemState extends State<DishItem> {
                       fit: StackFit.expand,
                       children: [
                         ImageViewer(
-                          widget.data['image'],
+                          widget.data['image'][0],
+                          fit: BoxFit.fill,
                         ),
                         Positioned(
                             bottom: 0,
                             left: 0,
                             child: AppTextStyles.heading2
-                                .text(widget.data['title'], maxLines: 2)
+                                .text(widget.data['name'], maxLines: 2)
                                 .padSymmetric(h: AppSize.paddingSmall))
                       ],
                     )
-                  : ImageViewer(
-                      widget.data['image'],
-                    ),
+                  : ImageViewer(widget.data['image'][0], fit: BoxFit.fill),
             ),
             Flexible(
               flex: havePrice || showCountChange ? 4 : 2,
@@ -75,7 +75,7 @@ class _DishItemState extends State<DishItem> {
                     : [
                         AppSize.paddingSmall.h,
                         AppTextStyles.bodyText
-                            .text(widget.data['title'])
+                            .text(widget.data['name'])
                             .padSymmetric(h: AppSize.paddingSmall),
                         AppSize.paddingSmall.h,
                         if (widget.data['price'] is String) ...[

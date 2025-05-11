@@ -185,26 +185,7 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
                           controller.update();
                         }
                       },
-                      items: [
-                        {
-                          'id': 1,
-                          'title': 'nấm kim châm vào chim',
-                          'price': '100000'
-                        },
-                        {'id': 2, 'title': 'sách bò', 'price': '100000'},
-                        {
-                          'id': 3,
-                          'title': 'thịt bò nhật bản',
-                          'price': '100000'
-                        },
-                        {'id': 4, 'title': 'nấm kim châm', 'price': '100000'},
-                        {'id': 5, 'title': 'sách bò', 'price': '100000'},
-                        {
-                          'id': 6,
-                          'title': 'thịt bò nhật bản thịt bò nhật bản',
-                          'price': '100000'
-                        },
-                      ],
+                      items: controller.items,
                     ),
                   ),
                   AppSize.paddingSmall.h,

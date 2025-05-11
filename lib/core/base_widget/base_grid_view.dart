@@ -30,6 +30,24 @@ class DishGridWithData extends StatelessWidget {
   final ScrollPhysics? physics;
   @override
   Widget build(BuildContext context) {
+    // return Wrap(
+    //   children: List.generate(
+    //     items.length,
+    //     (index) => InkWell(
+    //       onTap: () {
+    //         if (onItemTap != null) {
+    //           onItemTap!(items[index]);
+    //         }
+    //       },
+    //       child: DishItem(
+    //         data: items[index],
+    //         onCountChange: onCountChange,
+    //       ),
+    //     ).animate().fadeIn(duration: 350.ms + 50.ms * index).slide(
+    //         begin: (index % 2 == 0) ? const Offset(-2, 1) : const Offset(2, 1),
+    //         duration: 350.ms),
+    //   ),
+    // );
     return GridView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       physics: physics,
