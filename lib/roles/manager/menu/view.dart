@@ -153,9 +153,11 @@ class _MenuListPageState extends State<MenuListPage> {
       appBar: AppBar(
         title: Text('Danh Sách Menu'),
         actions: [
-          IconButton(
-            icon: Icon(Icons.add),
+          TextButton(
             onPressed: navigateToAddMenu,
+            child: const Row(
+              children: [Icon(Icons.add), Text('Thêm món')],
+            ),
           )
         ],
       ),

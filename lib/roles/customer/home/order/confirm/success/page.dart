@@ -48,7 +48,7 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
                     child: Column(
                       children: (controller.oderStartData.keys)
                           .map(
-                            (e) => item(controller.oderStartData[e], e),
+                            (e) => item(controller.oderStartData[e], 1),
                           )
                           .toList(),
                     ),
@@ -170,16 +170,33 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
                     child: DishGridWithData(
                       // physics: NeverScrollableScrollPhysics(),
                       onCountChange: (item, count) {
+                        // if (item['id'] != null) {
+                        //   try {
+                        //     var gems = item;
+                        //     gems['count'] = count.toString();
+                        //     counter[item['id']] =
+                        //         int.parse((item['price']).toString()) * count;
+                        //     order[item['id']] = gems;
+                        //     int temp = 0;
+                        //     for (var element in counter.values) {
+                        //       temp += element;
+                        //     }
+                        //     money = temp;
+                        //     setState(() {});
+                        //   } catch (e) {
+                        //     print(counter);
+                        //     print(e);
+                        //   }}
                         if (item['id'] != null) {
                           var gems = item;
-                          gems['count'] = count;
+                          gems['count'] = count.toString();
                           // controller.counter[item['id']] =
                           //     int.parse(item['price']) * count;
                           controller.orderMore[item['id']] = gems;
                           int temp = 0;
                           for (var element in controller.orderMore.values) {
-                            temp += int.parse(element['price']) *
-                                element['count'] as int;
+                            temp += int.parse(element['price'].toString()) *
+                                int.parse(element['count'].toString());
                           }
                           controller.money = temp;
                           controller.update();
@@ -254,7 +271,7 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
                     child: Column(
                       children: (controller.orderMore.keys)
                           .map(
-                            (e) => item(controller.orderMore[e], e),
+                            (e) => item(controller.orderMore[e], 1),
                           )
                           .toList(),
                     ),
@@ -426,7 +443,7 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: ImageViewer(
-            m['image'],
+            m['image'] is List ? m['image'][0] : m['image'],
             height: 50,
             width: 50,
           ),
@@ -436,8 +453,8 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppTextStyles.bodyText.text(m['title']),
-              AppTextStyles.bodyText.text(m['price']),
+              AppTextStyles.bodyText.text(m['name']),
+              AppTextStyles.bodyText.text(m['price'].toString()),
             ],
           ),
         ),

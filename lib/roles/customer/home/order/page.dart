@@ -13,8 +13,8 @@ class CustomerHomeOrder extends StatefulWidget {
 }
 
 class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
-  Map<int, int> counter = {};
-  Map<int, dynamic> order = {};
+  Map<String, int> counter = {};
+  Map<String, dynamic> order = {};
   int money = 0;
 
   @override
@@ -35,17 +35,22 @@ class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
                       // physics: NeverScrollableScrollPhysics(),
                       onCountChange: (item, count) {
                         if (item['id'] != null) {
-                          var gems = item;
-                          gems['count'] = count;
-                          counter[item['id']] =
-                              int.parse(item['price']) * count;
-                          order[item['id']] = gems;
-                          int temp = 0;
-                          for (var element in counter.values) {
-                            temp += element;
+                          try {
+                            var gems = item;
+                            gems['count'] = count.toString();
+                            counter[item['id']] =
+                                int.parse((item['price']).toString()) * count;
+                            order[item['id']] = gems;
+                            int temp = 0;
+                            for (var element in counter.values) {
+                              temp += element;
+                            }
+                            money = temp;
+                            setState(() {});
+                          } catch (e) {
+                            print(counter);
+                            print(e);
                           }
-                          money = temp;
-                          setState(() {});
                         }
                       },
                       items: p0.items),

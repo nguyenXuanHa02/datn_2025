@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:kichikichi/commons/bloc/baseController.dart';
+import 'package:kichikichi/core/imports/imports.dart';
 import 'package:kichikichi/roles/manager/menu/add_image/page.dart';
 
 class AddMenuPage extends StatefulWidget {
@@ -81,35 +81,45 @@ class _AddMenuPageState extends State<AddMenuPage> {
             TextField(
                 controller: _nameController,
                 decoration: InputDecoration(labelText: 'Tên món')),
+            AppSize.h8,
             TextField(
                 controller: _priceController,
                 decoration: InputDecoration(labelText: 'Giá'),
                 keyboardType: TextInputType.number),
+            AppSize.h8,
             TextField(
                 controller: _categoryController,
                 decoration: InputDecoration(labelText: 'Danh mục')),
+            AppSize.h8,
             TextField(
                 controller: _descController,
                 decoration: InputDecoration(labelText: 'Mô tả')),
+            AppSize.h8,
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: navigateToUploadImage,
-              child: Text('Chọn Ảnh'),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: navigateToUploadImage,
+                    child: Text('Chọn Ảnh'),
+                  ),
+                ),
+              ],
             ),
             if (_selectedImageUrl != null) ...[
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Image.network(_selectedImageUrl!, height: 150),
             ],
-            SizedBox(height: 20),
-            _isSubmitting
-                ? CircularProgressIndicator()
-                : ElevatedButton(
-                    onPressed: submitMenuItem,
-                    child: Text('Thêm Món'),
-                  ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
+      bottomNavigationBar: _isSubmitting
+          ? const CircularProgressIndicator()
+          : ElevatedButton(
+              onPressed: submitMenuItem,
+              child: const Text('Thêm Món'),
+            ).padAll(16),
     );
   }
 }

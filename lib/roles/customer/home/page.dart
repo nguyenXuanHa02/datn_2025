@@ -20,11 +20,10 @@ class CustomerHomePage extends StatelessWidget {
     return GetBuilder<CustomerHomeController>(
         init: CustomerHomeController(),
         builder: (_) {
-          print(_.card.toString() + 'haha');
           return BaseScaffold<CustomerHomeController>(
             (controller) {
               return Scaffold(
-                backgroundColor: AppColors.card,
+                backgroundColor: AppColors.background,
                 body: SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -36,8 +35,8 @@ class CustomerHomePage extends StatelessWidget {
                           const BaseBanner(
                             data: {},
                           ),
-                          AppSize.paddingMedium.h,
-                          const NotificationItem(),
+                          // AppSize.paddingMedium.h,
+                          // const NotificationItem(),
                           AppSize.paddingMedium.h,
                           if (controller.card.isNotEmpty)
                             CustomerPreorderCard(
@@ -56,9 +55,10 @@ class CustomerHomePage extends StatelessWidget {
                                         Navigator.of(context).pushNamed(
                                             RouteCons.customerHomeScan);
                                       },
-                                      data: {
+                                      data: const {
                                     'title': 'Order',
-                                    'background': Colors.orange
+                                    'background': Colors.orange,
+                                    'image': 'assets/svg/img_1.png'
                                   })),
                               AppSize.paddingMedium.w,
                               Expanded(
@@ -67,7 +67,10 @@ class CustomerHomePage extends StatelessWidget {
                                         Navigator.of(context).pushNamed(
                                             RouteCons.customerHomePreorder);
                                       },
-                                      data: const {'title': 'Preorder'})),
+                                      data: const {
+                                    'title': 'Preorder',
+                                    'image': 'assets/svg/img.png'
+                                  })),
                             ],
                           ),
                           AppSize.paddingMedium.h,

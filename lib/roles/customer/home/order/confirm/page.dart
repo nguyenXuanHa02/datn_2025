@@ -13,7 +13,7 @@ class CustomerHomeConfirmPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final orderData = (data['orderData'] as Map<int, dynamic>);
+    final orderData = (data['orderData'] as Map<String, dynamic>);
 
     return GetBuilder<CustomerHomeOrderConfirmController>(
         init: CustomerHomeOrderConfirmController(
@@ -31,7 +31,7 @@ class CustomerHomeConfirmPage extends StatelessWidget {
                     child: Column(
                       children: orderData.keys
                           .map(
-                            (e) => item(orderData[e], e),
+                            (e) => item(orderData[e], 1),
                           )
                           .toList(),
                     ),
@@ -83,7 +83,7 @@ class CustomerHomeConfirmPage extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: ImageViewer(
-            m['image'],
+            m['image'] is List ? m['image'][0] : m['image'],
             height: 50,
             width: 50,
           ),
@@ -93,8 +93,8 @@ class CustomerHomeConfirmPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppTextStyles.bodyText.text(m['title']),
-              AppTextStyles.bodyText.text(m['price']),
+              AppTextStyles.bodyText.text(m['name']),
+              AppTextStyles.bodyText.text(m['price'].toString()),
             ],
           ),
         ),

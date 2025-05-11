@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kichikichi/commons/bloc/baseController.dart';
+import 'package:kichikichi/core/extensions/padding_extension.dart';
 
 class UploadImagePage extends StatefulWidget {
   final Function(String imageUrl) onImageUploaded;
@@ -72,24 +73,31 @@ class _UploadImagePageState extends State<UploadImagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Upload Ảnh')),
+      appBar: AppBar(title: const Text('Upload Ảnh')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            ElevatedButton(onPressed: pickImage, child: Text('Chọn Ảnh')),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                      onPressed: pickImage, child: const Text('Chọn Ảnh')),
+                ),
+              ],
+            ),
             if (_selectedImage != null)
-              Image.file(_selectedImage!, height: 200),
-            SizedBox(height: 20),
-            _isUploading
-                ? CircularProgressIndicator()
-                : ElevatedButton(
-                    onPressed: uploadImage,
-                    child: Text('Upload & Dùng ảnh này'),
-                  ),
+              Image.file(_selectedImage!, height: 200).padAll(16),
+            const SizedBox(height: 20),
           ],
         ),
       ),
+      bottomNavigationBar: _isUploading
+          ? const Center(child: CircularProgressIndicator())
+          : ElevatedButton(
+              onPressed: uploadImage,
+              child: const Text('Upload & Dùng ảnh này'),
+            ).padAll(16),
     );
   }
 }

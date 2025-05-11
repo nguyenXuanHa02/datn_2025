@@ -1,4 +1,5 @@
 import 'package:kichikichi/core/imports/imports.dart';
+import 'package:kichikichi/core/styles/colors/app_colors.dart';
 
 class MIconButton extends StatelessWidget {
   const MIconButton({super.key, required this.onTap, required this.data});
@@ -12,12 +13,16 @@ class MIconButton extends StatelessWidget {
       onTap: onTap,
       child: AspectRatio(
         aspectRatio: 1,
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            color: data['background'] as Color? ?? Colors.blue,
-          ),
-          child: Center(child: Text(data['title'] ?? '')),
+        child: Stack(
+          children: [
+            if (data['image'] != null) Image.asset(data['image']),
+            Center(
+                child: Text(
+              data['title'] ?? '',
+              style:
+                  AppTextStyles.heading1.copyWith(color: AppColors.onPrimary),
+            )),
+          ],
         ),
       ),
     ));

@@ -12,13 +12,13 @@ enum CustomerHomeOrderConfirmState {
 }
 
 class CustomerHomeOrderConfirmController extends BaseController {
-  final Map<int, dynamic> oderStartData;
+  final Map<String, dynamic> oderStartData;
   final Map tableData;
   CustomerHomeOrderConfirmState showing = CustomerHomeOrderConfirmState.start;
 
   num paid = 0;
-  Map<int, int> counter = {};
-  Map<int, dynamic> orderMore = {};
+  Map<String, int> counter = {};
+  Map<String, dynamic> orderMore = {};
   int money = 0;
   String currentOrderId = '';
 
@@ -103,7 +103,8 @@ class CustomerHomeOrderConfirmController extends BaseController {
     int t = 0;
     oderStartData.values.forEach(
       (element) {
-        t += (element['count'] as int) * int.parse(element['price'] as String);
+        t += int.parse(element['count'].toString()) *
+            int.parse(element['price'].toString());
       },
     );
     return t;

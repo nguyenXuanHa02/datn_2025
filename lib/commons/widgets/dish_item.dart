@@ -27,30 +27,44 @@ class _DishItemState extends State<DishItem> {
   Widget build(BuildContext context) {
     return AppSize.radiusMedium.roundedAll(
       Container(
-        color: AppColors.background,
+        color: AppColors.card,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Flexible(
-              fit: FlexFit.tight,
+            Expanded(
               flex: 6,
-              child: (havePrice && showCountChange)
-                  ? Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        ImageViewer(
-                          widget.data['image'][0],
-                          fit: BoxFit.fill,
-                        ),
-                        Positioned(
-                            bottom: 0,
-                            left: 0,
-                            child: AppTextStyles.heading2
-                                .text(widget.data['name'], maxLines: 2)
-                                .padSymmetric(h: AppSize.paddingSmall))
-                      ],
-                    )
-                  : ImageViewer(widget.data['image'][0], fit: BoxFit.fill),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: (havePrice && showCountChange)
+                        ? Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              ImageViewer(
+                                widget.data['image'][0],
+                                fit: BoxFit.cover,
+                              ),
+                              Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  child: Container(
+                                    color: AppColors.card.withOpacity(0.45),
+                                    child: AppTextStyles.heading2
+                                        .text(
+                                          widget.data['name'],
+                                          maxLines: 2,
+                                        )
+                                        .padSymmetric(h: AppSize.paddingSmall),
+                                  ))
+                            ],
+                          )
+                        : Expanded(
+                            child: ImageViewer(widget.data['image'][0],
+                                fit: BoxFit.cover),
+                          ),
+                  ),
+                ],
+              ),
             ),
             Flexible(
               flex: havePrice || showCountChange ? 4 : 2,
@@ -61,7 +75,7 @@ class _DishItemState extends State<DishItem> {
                         Flexible(
                           flex: 4,
                           child: AppTextStyles.heading3
-                              .text(widget.data['price'])
+                              .text(widget.data['price'].toString())
                               .padSymmetric(
                                 h: AppSize.paddingSmall,
                                 v: AppSize.paddingSmall,
