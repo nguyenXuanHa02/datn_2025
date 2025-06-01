@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:kichikichi/commons/bloc/baseController.dart';
-import 'package:kichikichi/core/extensions/utils.dart';
+import 'package:kichikichi/core/imports/imports.dart';
+
+import '../customer/home/order/confirm/page.dart';
 
 enum AccountRole { guest, customer, staff, manager }
 
@@ -13,6 +14,7 @@ class AccountController extends BaseController {
   @override
   void onInit() {
     loadAccount();
+
     super.onInit();
   }
 
@@ -145,5 +147,20 @@ class AccountController extends BaseController {
     hireLoading();
     currentRole = AccountRole.guest;
     update();
+  }
+
+  Future<void> loadOrder(BuildContext context) async {
+    final order = await getLocal(
+      'order',
+    );
+
+    if (order is String && context.mounted) {
+      final orderData = jsonDecode(order);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => CustomerHomeConfirmPage(data: orderData),
+        ),
+      );
+    }
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:kichikichi/commons/bloc/baseController.dart';
+import 'package:get/get.dart';
 import 'package:kichikichi/core/imports/imports.dart';
 import 'package:kichikichi/roles/customer/home/order/confirm/controller.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -25,27 +25,19 @@ class _WebviewState extends State<Webview> {
             final result = await controller.runJavaScriptReturningResult(
               'document.body.innerText',
             );
-
             final jsonString = _cleanJsResult(result);
-
             try {
               final jsonData = jsonDecode(jsonString);
               widget.onSuccess(jsonData);
-              print('✅ JSON Parsed: $jsonData');
-            } catch (e) {
-              print('❌ Lỗi khi parse JSON: $e');
-            }
+            } catch (e) {}
           },
         ),
       )
       ..loadRequest(Uri.parse(widget.url));
-
     super.initState();
   }
 
   String _cleanJsResult(Object result) {
-    // Kết quả JS trả về sẽ có dạng: "\"{ \\\"key\\\": \\\"value\\\" }\""
-    // Cần xử lý chuỗi thoát
     final raw = result.toString();
     return raw
         .replaceAll(RegExp(r'^"|"$'), '') // bỏ dấu " đầu cuối
@@ -54,25 +46,29 @@ class _WebviewState extends State<Webview> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseScaffold<CustomerHomeOrderConfirmController>(
-      (p0) {
-        return Scaffold(
-          appBar: Header(
-            onBackPress: () {
-              p0.cancelPayment();
-            },
-            title: 'Thanh toán',
-          ),
-          // body: WebViewWidget(controller: controller),
-          body: FutureBuilder(
-              future: Future.delayed(100.ms),
-              builder: (c, _) {
-                return WebViewWidget(
-                  controller: controller,
-                );
-              }),
-        );
-      },
+    return Scaffold(
+      appBar: Header(
+        onBackPress: () {
+          if (Get.isRegistered<CustomerHomeOrderConfirmController>()) {
+            final _controller = Get.find<CustomerHomeOrderConfirmController>();
+            _controller.cancelPayment();
+          }
+        },
+        title: 'Thanh toán',
+      ),
+      // body: WebViewWidget(controller: controller),
+      body: FutureBuilder(
+          future: Future.delayed(100.ms),
+          builder: (c, _) {
+            return WebViewWidget(
+              controller: controller,
+            );
+          }),
     );
+    // return BaseScaffold<CustomerHomeOrderConfirmController>(
+    //   (p0) {
+    //     return
+    //   },
+    // );
   }
 }

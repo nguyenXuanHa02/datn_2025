@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:kichikichi/commons/bloc/baseController.dart';
+import 'package:kichikichi/core/extensions/utils.dart';
+import 'package:kichikichi/roles/customer/home/order/confirm/success/page.dart';
 
 enum CustomerHomeOrderConfirmState {
   start,
@@ -21,14 +26,16 @@ class CustomerHomeOrderConfirmController extends BaseController {
   Map<String, dynamic> orderMore = {};
   int money = 0;
   String currentOrderId = '';
-
-  CustomerHomeOrderConfirmController({
+  BuildContext context;
+  CustomerHomeOrderConfirmController(
+    this.context, {
     required this.oderStartData,
     required this.tableData,
   });
   @override
   void onInit() {
     fetchMenuAsMap();
+    loadOrdered(context);
     super.onInit();
   }
 
@@ -64,6 +71,7 @@ class CustomerHomeOrderConfirmController extends BaseController {
         final orderId = response.data['orderId'];
         currentOrderId = orderId;
         showing = CustomerHomeOrderConfirmState.start;
+        saveLocal('orderId', currentOrderId);
         update();
         onSuccess();
       } else {
@@ -73,6 +81,13 @@ class CustomerHomeOrderConfirmController extends BaseController {
       print('❌ Error placing order: $e');
       // TODO: show error to user
     }
+  }
+
+  Future<void> saveOrderToLocal(Map data) async {
+    await saveLocal(
+      'order',
+      jsonEncode(data),
+    );
   }
 
   Future<Map?> payOrder({
@@ -115,23 +130,20 @@ class CustomerHomeOrderConfirmController extends BaseController {
 
   Future<void> thanhToan(
       {required Function() onSuccess, required Function() onFail}) async {
+    showLoading();
     paid = getSoTienCanPay();
     final now = DateTime.now();
     orderId =
         '${paid}${now.year}${now.month}${now.day}${now.hour}${now.minute}${now.second}';
-    //
-    print(tableData);
     final res = await payOrder(
         orderId: orderId,
         amount: paid.toInt(),
         description: 'thanh toan hoa don ban ${tableData['table_code']}');
-    // showing = CustomerHomeOrderConfirmState.thanhToanStart;
-    print('${res?['paymentUrl']}');
+    hireLoading();
     paymentUrl = res?['paymentUrl'];
     if (paymentUrl.isNotEmpty) {
       showing = CustomerHomeOrderConfirmState.thanhToanStart;
-    } else {}
-    // print(res);
+    }
     update();
     onSuccess();
   }
@@ -202,8 +214,7 @@ class CustomerHomeOrderConfirmController extends BaseController {
     if (map['status'] == 'success') {
       await updateOrderPaymentStatus(true);
       showing = CustomerHomeOrderConfirmState.thanhToanThanhCong;
-      //todo: cap nhat thong tin thanh toan vao don hang(order)
-
+      clearLocal('order');
       update();
     } else {
       await updateOrderPaymentStatus(false);
@@ -217,5 +228,20 @@ class CustomerHomeOrderConfirmController extends BaseController {
     paymentUrl = '';
     showing = CustomerHomeOrderConfirmState.start;
     update();
+  }
+
+  Future<void> loadOrdered(BuildContext context) async {
+    final loadOrderedId = await getLocal('orderId');
+    if (loadOrderedId != null && context.mounted) {
+      currentOrderId = loadOrderedId;
+      update();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const CustomerHomeOrderConfirmSuccessPage(),
+        ),
+        // (route) => false,
+      );
+    }
   }
 }

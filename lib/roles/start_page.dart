@@ -22,7 +22,7 @@ class _CustomerStartPageState extends State<CustomerStartPage> {
   @override
   Widget build(BuildContext context) {
     return BaseScaffold<AccountController>(
-      init: AccountController(),
+      init: AccountController()..loadOrder(context),
       showLoading: false,
       (p0) {
         return Scaffold(

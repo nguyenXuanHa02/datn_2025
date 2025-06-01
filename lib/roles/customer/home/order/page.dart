@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:kichikichi/commons/bloc/baseController.dart';
 import 'package:kichikichi/core/imports/imports.dart';
 import 'package:kichikichi/roles/customer/home/order/confirm/page.dart';
@@ -71,15 +73,21 @@ class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
                         Expanded(
                           child: RoundedButton.text(
                             'Tiếp tục',
-                            () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => CustomerHomeConfirmPage(
-                                    data: {
-                                      'table': widget.data,
-                                      'orderData': order,
-                                      'total': money
-                                    }),
-                              ));
+                            () async {
+                              final orderData = {
+                                'table': widget.data,
+                                'orderData': order,
+                                'total': money
+                              };
+                              await saveLocal('order', jsonEncode(orderData));
+                              print("saved");
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      CustomerHomeConfirmPage(data: orderData),
+                                ),
+                                (route) => false,
+                              );
                             },
                           ),
                         )

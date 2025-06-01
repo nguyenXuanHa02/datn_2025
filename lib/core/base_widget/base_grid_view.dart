@@ -49,7 +49,7 @@ class DishGridWithData extends StatelessWidget {
     //   ),
     // );
     return GridView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: AppSize.paddingSmall),
       physics: physics,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossCount ?? 2,

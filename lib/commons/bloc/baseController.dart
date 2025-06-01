@@ -24,8 +24,6 @@ class DioClient {
         },
       ),
     );
-
-    // Interceptor (log, token, v.v.)
     dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
   }
 
@@ -33,7 +31,6 @@ class DioClient {
     dio.options.headers['Content-Type'] = 'multipart/form-data';
   }
 
-  /// Khôi phục header về JSON nếu cần
   void setJsonHeaders() {
     dio.options.headers['Content-Type'] = 'application/json';
   }
@@ -108,38 +105,39 @@ class BaseController extends GetxController {
 }
 
 Widget BaseScaffold<T extends BaseController>(Widget Function(T) scaffold,
-        {T? init, bool showLoading = true}) =>
-    GetBuilder<T>(
-      init: init,
-      builder: (controller) => Stack(
-        children: [
+    {T? init, bool showLoading = true}) {
+  return GetBuilder<T>(
+    init: init,
+    builder: (controller) => Stack(
+      children: [
+        Builder(builder: (context) {
+          return GestureDetector(
+              onTap: FocusScope.of(context).unfocus,
+              child: scaffold(controller));
+        }),
+        if (controller.isShowLoading && showLoading)
           Builder(builder: (context) {
-            return GestureDetector(
-                onTap: FocusScope.of(context).unfocus,
-                child: scaffold(controller));
+            return Container(
+              color: AppColors.warning.withOpacity(0.1),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ).animate().fadeIn(duration: 250.ms),
+            );
           }),
-          if (controller.isShowLoading && showLoading)
-            Builder(builder: (context) {
-              return Container(
-                color: AppColors.warning.withOpacity(0.1),
-                child: const Center(
-                  child: CircularProgressIndicator(),
-                ).animate().fadeIn(duration: 250.ms),
+        if ((controller.error['message'] != null))
+          Builder(
+            builder: (context) {
+              return IntrinsicHeight(
+                child: Card(
+                  child: Text(
+                    '${controller.error['message']}',
+                    style: AppTextStyles.error,
+                  ),
+                ).safePad().animate().fadeOut(delay: 1000.ms),
               );
-            }),
-          if ((controller.error['message'] != null))
-            Builder(
-              builder: (context) {
-                return IntrinsicHeight(
-                  child: Card(
-                    child: Text(
-                      '${controller.error['message']}',
-                      style: AppTextStyles.error,
-                    ),
-                  ).safePad().animate().fadeOut(delay: 1000.ms),
-                );
-              },
-            )
-        ],
-      ),
-    );
+            },
+          )
+      ],
+    ),
+  );
+}

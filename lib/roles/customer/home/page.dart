@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kichikichi/commons/bloc/baseController.dart';
 import 'package:kichikichi/core/base_widget/banner.dart';
@@ -24,6 +25,17 @@ class CustomerHomePage extends StatelessWidget {
             (controller) {
               return Scaffold(
                 backgroundColor: AppColors.background,
+                appBar: AppBar(
+                  backgroundColor: Colors.transparent,
+                  leadingWidth: 200,
+                  leading: SvgPicture.asset(
+                    'assets/svg/kichi.svg',
+                    height: 60,
+                    fit: BoxFit.fitHeight,
+                    colorFilter: const ColorFilter.mode(
+                        AppColors.primary, BlendMode.srcIn),
+                  ),
+                ),
                 body: SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -46,7 +58,7 @@ class CustomerHomePage extends StatelessWidget {
                               count: controller.card['code'] ?? '',
                               pickupTime: controller.card['pickupTime'] ?? '',
                             ),
-                          AppSize.paddingMedium.h,
+                          AppSize.paddingSmall.h,
                           Row(
                             children: [
                               Expanded(
@@ -56,7 +68,7 @@ class CustomerHomePage extends StatelessWidget {
                                             RouteCons.customerHomeScan);
                                       },
                                       data: const {
-                                    'title': 'Order',
+                                    'title': 'Gọi món',
                                     'background': Colors.orange,
                                     'image': 'assets/svg/img_1.png'
                                   })),
@@ -68,13 +80,14 @@ class CustomerHomePage extends StatelessWidget {
                                             RouteCons.customerHomePreorder);
                                       },
                                       data: const {
-                                    'title': 'Preorder',
+                                    'title': 'Đặt bàn',
                                     'image': 'assets/svg/img.png'
                                   })),
                             ],
-                          ),
-                          AppSize.paddingMedium.h,
-                          AppTextStyles.heading2.text('mon_an_noi_bat'),
+                          ).padAll(AppSize.paddingSmall),
+                          AppSize.paddingLarge.h,
+                          AppSize.paddingLarge.h,
+                          AppTextStyles.heading2.text('Món ăn nổi bật'),
                           AppSize.paddingSmall.h,
                           (controller.items.isNotEmpty)
                               ? DishGridWithData(

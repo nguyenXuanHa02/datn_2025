@@ -35,9 +35,9 @@ class _DishItemState extends State<DishItem> {
               flex: 6,
               child: Row(
                 children: [
-                  Flexible(
-                    child: (havePrice && showCountChange)
-                        ? Stack(
+                  (havePrice && showCountChange)
+                      ? Flexible(
+                          child: Stack(
                             fit: StackFit.expand,
                             children: [
                               ImageViewer(
@@ -57,12 +57,12 @@ class _DishItemState extends State<DishItem> {
                                         .padSymmetric(h: AppSize.paddingSmall),
                                   ))
                             ],
-                          )
-                        : Expanded(
-                            child: ImageViewer(widget.data['image'][0],
-                                fit: BoxFit.cover),
                           ),
-                  ),
+                        )
+                      : Expanded(
+                          child: ImageViewer(widget.data['image'][0],
+                              fit: BoxFit.fitWidth),
+                        ),
                 ],
               ),
             ),
@@ -75,7 +75,7 @@ class _DishItemState extends State<DishItem> {
                         Flexible(
                           flex: 4,
                           child: AppTextStyles.heading3
-                              .text(widget.data['price'].toString())
+                              .text('${widget.data['price']} vnd')
                               .padSymmetric(
                                 h: AppSize.paddingSmall,
                                 v: AppSize.paddingSmall,
@@ -94,7 +94,7 @@ class _DishItemState extends State<DishItem> {
                         AppSize.paddingSmall.h,
                         if (widget.data['price'] is String) ...[
                           AppTextStyles.bodyText
-                              .text(widget.data['price'])
+                              .text('${widget.data['price']} vnd')
                               .padSymmetric(h: AppSize.paddingSmall),
                           AppSize.paddingSmall.h,
                         ]
