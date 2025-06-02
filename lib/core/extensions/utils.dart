@@ -14,8 +14,10 @@ Future<void> saveLocal(String key, String value) async {
 Future<void> clearLocal(
   String key,
 ) async {
-  final prefs = await SharedPreferences.getInstance();
-  await prefs.remove(key);
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
+  } catch (e) {}
 }
 
 Future<String?> getLocal(String key) async {

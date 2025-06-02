@@ -74,20 +74,35 @@ class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
                           child: RoundedButton.text(
                             'Tiếp tục',
                             () async {
+                              setState(() {
+                                order.removeWhere(
+                                    (key, value) => value['count'] == 0);
+                              });
                               final orderData = {
-                                'table': widget.data,
-                                'orderData': order,
+                                'table': (widget.data),
+                                'orderData': (order),
                                 'total': money
                               };
+                              print(orderData.toString());
                               await saveLocal('order', jsonEncode(orderData));
-                              print("saved");
-                              Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      CustomerHomeConfirmPage(data: orderData),
-                                ),
-                                (route) => false,
-                              );
+                              final Map<String, dynamic> getLocalOrder =
+                                  jsonDecode(await getLocal('order') ?? '');
+                              print(
+                                  '${(getLocalOrder['orderData']).values.first['count'].runtimeType}');
+                              print(
+                                  '${(getLocalOrder['orderData']).values.first['price'].runtimeType}');
+                              print('${getLocalOrder['total'].runtimeType}');
+
+                              // print(getLocalOrder);
+                              if (context.mounted) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        CustomerHomeConfirmPage(
+                                            data: orderData),
+                                  ),
+                                );
+                              }
                             },
                           ),
                         )

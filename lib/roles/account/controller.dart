@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:kichikichi/commons/bloc/baseController.dart';
 import 'package:kichikichi/core/imports/imports.dart';
-
-import '../customer/home/order/confirm/page.dart';
+import 'package:kichikichi/roles/customer/home/order/confirm/page.dart';
 
 enum AccountRole { guest, customer, staff, manager }
 
@@ -155,7 +154,10 @@ class AccountController extends BaseController {
     );
 
     if (order is String && context.mounted) {
-      final orderData = jsonDecode(order);
+      final Map<String, dynamic> orderData = jsonDecode(order);
+      // print(orderData);
+      print(
+          '${(orderData['orderData'] as Map).values.first['count'].runtimeType}');
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => CustomerHomeConfirmPage(data: orderData),

@@ -12,6 +12,9 @@ class CustomerHomeConfirmPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final orderData = (data['orderData'] as Map<String, dynamic>);
+    // clearLocal(
+    //   'order',
+    // );
     return GetBuilder<CustomerHomeOrderConfirmController>(
         init: CustomerHomeOrderConfirmController(context,
             oderStartData: orderData, tableData: data['table']),

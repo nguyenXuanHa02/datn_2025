@@ -84,7 +84,10 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
                           duration: 350.ms,
                         ),
                     RoundedButton.text('Thanh toán bằng tiền mặt', () {
-                      controller.thanhToan(onSuccess: () {}, onFail: () {});
+                      clearLocal('order');
+                      clearLocal('orderId');
+
+                      controller.moneyPay();
                       Navigator.pop(context);
                     }).padAll(8).animate().slide(
                           begin: const Offset(2, 0),

@@ -83,13 +83,6 @@ class CustomerHomeOrderConfirmController extends BaseController {
     }
   }
 
-  Future<void> saveOrderToLocal(Map data) async {
-    await saveLocal(
-      'order',
-      jsonEncode(data),
-    );
-  }
-
   Future<Map?> payOrder({
     required String orderId,
     required int amount,
@@ -154,7 +147,8 @@ class CustomerHomeOrderConfirmController extends BaseController {
     for (var key in orderMore.keys) {
       final count = orderMore[key]['count'];
       if (oderStartData[key] != null) {
-        oderStartData[key]['count'] += count;
+        oderStartData[key]['count'] =
+            '${int.parse('$count') + int.parse('${oderStartData[key]['count']}')}';
       } else {
         oderStartData[key] = orderMore[key];
       }
@@ -162,6 +156,13 @@ class CustomerHomeOrderConfirmController extends BaseController {
     //todo:cap nhat don order vao csdl
     try {
       showLoading();
+      await saveLocal(
+          'order',
+          jsonEncode({
+            'table': (tableData),
+            'orderData': oderStartData,
+            'total': getSoTienCanPay()
+          }));
       final response = await dio.post(
         '/order/update',
         data: {
@@ -244,4 +245,6 @@ class CustomerHomeOrderConfirmController extends BaseController {
       );
     }
   }
+
+  void moneyPay() {}
 }
