@@ -43,9 +43,9 @@ class RoundedButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: 50,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           shape: BoxShape.rectangle,
-          color: Colors.blue,
+          color: Theme.of(context).primaryColor,
         ),
         child:
             Center(child: AppTextStyles.buttonText.text(data['title'] ?? '')),

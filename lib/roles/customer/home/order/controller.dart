@@ -9,6 +9,7 @@ class HomeOrderController extends BaseController {
 
   Future<void> fetchMenuAsMap() async {
     try {
+      showLoading();
       final response = await dio.get('/menu');
 
       if (response.statusCode == 200 && response.data['status'] == 'success') {
@@ -20,6 +21,8 @@ class HomeOrderController extends BaseController {
       }
     } catch (e) {
       throw Exception('Lỗi khi tải menu: $e');
+    } finally {
+      hireLoading();
     }
   }
 }

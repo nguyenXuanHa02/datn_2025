@@ -23,6 +23,7 @@ class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
   Widget build(BuildContext context) {
     return BaseScaffold<HomeOrderController>(
       init: HomeOrderController(),
+      showLoading: true,
       (p0) {
         return Scaffold(
             appBar: Header(

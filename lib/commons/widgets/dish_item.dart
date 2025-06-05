@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kichikichi/core/imports/imports.dart';
 import 'package:kichikichi/core/styles/colors/app_colors.dart';
 
@@ -121,7 +122,7 @@ class _DishItemState extends State<DishItem> {
                     });
                   }
                 },
-                icon: const Icon(Icons.add))),
+                icon: SvgPicture.asset('assets/svg/plus.svg'))),
         AppTextStyles.heading2.text('$count').padAll(4),
         Expanded(
             child: IconButton(
@@ -133,7 +134,7 @@ class _DishItemState extends State<DishItem> {
                     });
                   }
                 },
-                icon: const Icon(Icons.minimize_rounded)))
+                icon: SvgPicture.asset('assets/svg/minus.svg')))
       ],
     );
   }
