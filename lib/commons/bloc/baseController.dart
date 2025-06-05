@@ -105,15 +105,18 @@ class BaseController extends GetxController {
 }
 
 Widget BaseScaffold<T extends BaseController>(Widget Function(T) scaffold,
-    {T? init, bool showLoading = true}) {
+    {T? init, bool showLoading = true, bool canPop = true}) {
   return GetBuilder<T>(
     init: init,
     builder: (controller) => Stack(
       children: [
         Builder(builder: (context) {
-          return GestureDetector(
-              onTap: FocusScope.of(context).unfocus,
-              child: scaffold(controller));
+          return PopScope(
+            canPop: canPop,
+            child: GestureDetector(
+                onTap: FocusScope.of(context).unfocus,
+                child: scaffold(controller)),
+          );
         }),
         if (controller.isShowLoading && showLoading)
           Builder(builder: (context) {

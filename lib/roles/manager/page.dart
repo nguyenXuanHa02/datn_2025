@@ -19,7 +19,7 @@ class ManagerPage extends StatelessWidget {
               child: Column(
                 children: [
                   RoundedButton.text(
-                    'Quản lý doanh thu',
+                    'Thống kê doanh thu',
                     () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const RevenuePage(),

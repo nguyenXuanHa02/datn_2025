@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:kichikichi/commons/bloc/baseController.dart';
 import 'package:kichikichi/core/base_widget/formtextfield.dart';
 import 'package:kichikichi/roles/account/controller.dart';
@@ -11,9 +10,6 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!Get.isRegistered<AccountController>()) {
-      Get.put<AccountController>(AccountController());
-    }
     return BaseScaffold<AccountController>(
       (controller) {
         final manager = Builder(

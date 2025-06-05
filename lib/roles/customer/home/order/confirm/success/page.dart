@@ -6,12 +6,14 @@ import 'package:kichikichi/roles/customer/home/order/confirm/controller.dart';
 import 'package:kichikichi/roles/customer/home/order/confirm/success/webview.dart';
 
 class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
-  const CustomerHomeOrderConfirmSuccessPage({super.key});
+  const CustomerHomeOrderConfirmSuccessPage({super.key, this.canPop});
+
+  final bool? canPop;
 
   @override
   Widget build(BuildContext context) {
-    return BaseScaffold<CustomerHomeOrderConfirmController>(showLoading: true,
-        (controller) {
+    return BaseScaffold<CustomerHomeOrderConfirmController>(
+        showLoading: true, canPop: false, (controller) {
       print(controller.showing.name);
       final onStart = Builder(builder: (context) {
         return Column(
@@ -48,7 +50,68 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
                     child: Column(
                       children: (controller.oderStartData.keys)
                           .map(
-                            (e) => item(controller.oderStartData[e], 1),
+                            (e) => Row(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: ImageViewer(
+                                    controller.oderStartData[e]['image'] is List
+                                        ? controller.oderStartData[e]['image']
+                                            [0]
+                                        : controller.oderStartData[e]['image'],
+                                    height: 50,
+                                    width: 50,
+                                  ),
+                                ),
+                                AppSize.paddingSmall.w,
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      AppTextStyles.bodyText.text(
+                                          controller.oderStartData[e]['name']),
+                                      AppTextStyles.bodyText.text(controller
+                                          .oderStartData[e]['price']
+                                          .toString()),
+                                    ],
+                                  ),
+                                ),
+                                Center(
+                                  child: Text(
+                                      'x${controller.oderStartData[e]['count']}'),
+                                ),
+                                if (controller.showHuyMon)
+                                  IconButton(
+                                    onPressed: () {
+                                      int count = int.parse(
+                                          '${controller.oderStartData[e]['count']}');
+                                      if (controller.oderStartData.length ==
+                                          1) {
+                                        ScaffoldMessenger.of(context)
+                                            .sendMessage(
+                                                'Đơn hàng không thể trống');
+                                        controller
+                                          ..showHuyMon = false
+                                          ..update();
+
+                                        return;
+                                      }
+                                      if (count > 1) {
+                                        controller.oderStartData[e]['count'] =
+                                            '${count - 1}';
+                                        controller.update();
+                                      } else {
+                                        controller
+                                          ..oderStartData.remove(e)
+                                          ..update();
+                                      }
+                                    },
+                                    icon: const Icon(
+                                        Icons.restore_from_trash_sharp),
+                                  )
+                              ],
+                            ).padSymmetric(v: 4),
                           )
                           .toList(),
                     ),
@@ -56,14 +119,41 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
                 )
               ],
             )),
-            RoundedButton.text('Gọi thêm món', () {
-              controller.showing =
-                  CustomerHomeOrderConfirmState.goiThemMonStart;
-              controller.update();
-            }).animate().slide(
-                  begin: const Offset(2, 0),
-                  duration: 350.ms,
+            Text('Đơn có thể hủy trong ${controller.remaining.inSeconds} giây'),
+            Row(
+              children: [
+                Expanded(
+                  child: RoundedButton.text(
+                          controller.showHuyMon ? "Xác nhận" : 'Hủy món', () {
+                    if (controller.remaining == Duration.zero) {
+                      ScaffoldMessenger.of(context)
+                          .sendMessage('Không thể hủy món sau khi đặt 5 phút');
+                      return;
+                    }
+                    if (controller.showHuyMon) {
+                      controller.confirmHuyOrder();
+                    }
+                    controller.showHuyMon = !controller.showHuyMon;
+                    controller.update();
+                  }).animate().slide(
+                        begin: const Offset(2, 0),
+                        duration: 350.ms,
+                      ),
                 ),
+                AppSize.w8,
+                Expanded(
+                  child: RoundedButton.text('Gọi thêm món', () {
+                    controller
+                      ..showing = CustomerHomeOrderConfirmState.goiThemMonStart
+                      ..showHuyMon = false;
+                    controller.update();
+                  }).animate().slide(
+                        begin: const Offset(2, 0),
+                        duration: 350.ms,
+                      ),
+                ),
+              ],
+            ),
             AppSize.h(8),
             RoundedButton.text('Thanh toán', () {
               showModalBottomSheet(
@@ -86,7 +176,6 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
                     RoundedButton.text('Thanh toán bằng tiền mặt', () {
                       clearLocal('order');
                       clearLocal('orderId');
-
                       controller.moneyPay();
                       Navigator.pop(context);
                     }).padAll(8).animate().slide(
@@ -143,12 +232,12 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
                   RouteCons.start,
                   (route) => false,
                 );
-              }).animate().slide(
+              }).padAll(16).animate().slide(
                     begin: const Offset(2, 0),
                     duration: 350.ms,
                   ),
             ],
-          ).padAll(16),
+          ),
         );
       });
       final goithemmon = Builder(
@@ -171,30 +260,11 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
                   AppSize.paddingSmall.h,
                   Expanded(
                     child: DishGridWithData(
-                      // physics: NeverScrollableScrollPhysics(),
                       onCountChange: (item, count) {
-                        // if (item['id'] != null) {
-                        //   try {
-                        //     var gems = item;
-                        //     gems['count'] = count.toString();
-                        //     counter[item['id']] =
-                        //         int.parse((item['price']).toString()) * count;
-                        //     order[item['id']] = gems;
-                        //     int temp = 0;
-                        //     for (var element in counter.values) {
-                        //       temp += element;
-                        //     }
-                        //     money = temp;
-                        //     setState(() {});
-                        //   } catch (e) {
-                        //     print(counter);
-                        //     print(e);
-                        //   }}
                         if (item['id'] != null) {
                           var gems = item;
                           gems['count'] = count.toString();
-                          // controller.counter[item['id']] =
-                          //     int.parse(item['price']) * count;
+                          gems['order_time'] = DateTime.now().toIso8601String();
                           controller.orderMore[item['id']] = gems;
                           int temp = 0;
                           for (var element in controller.orderMore.values) {
@@ -410,12 +480,12 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
                   RouteCons.start,
                   (route) => false,
                 );
-              }).animate().slide(
+              }).padAll(16).animate().slide(
                     begin: const Offset(2, 0),
                     duration: 350.ms,
                   ),
             ],
-          ).padAll(16),
+          ),
         ),
       );
       if (controller.showing ==
@@ -464,7 +534,7 @@ class CustomerHomeOrderConfirmSuccessPage extends StatelessWidget {
         ),
         Center(
           child: Text('x${m['count']}'),
-        )
+        ),
       ],
     ).padSymmetric(v: 8).animate().fadeIn(duration: 300.ms).slide(
           begin: const Offset(-2, 0),

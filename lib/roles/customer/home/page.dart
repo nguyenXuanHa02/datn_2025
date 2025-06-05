@@ -55,7 +55,7 @@ class CustomerHomePage extends StatelessWidget {
                               name: controller.card['name'] ?? '',
                               phone: controller.card['phone'] ?? '',
                               code: controller.card['code'] ?? '',
-                              count: controller.card['code'] ?? '',
+                              count: controller.card['count'] ?? '',
                               pickupTime: controller.card['pickupTime'] ?? '',
                             ),
                           AppSize.paddingSmall.h,
@@ -95,7 +95,7 @@ class CustomerHomePage extends StatelessWidget {
                                   physics: const NeverScrollableScrollPhysics(),
                                   items: controller.items,
                                 )
-                              : const CircularProgressIndicator()
+                              : const Center(child: CircularProgressIndicator())
                         ],
                       ),
                     ),

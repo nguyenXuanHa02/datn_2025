@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kichikichi/commons/bloc/baseController.dart';
 import 'package:kichikichi/core/extensions/utils.dart';
 import 'package:kichikichi/roles/customer/home/order/confirm/success/page.dart';
@@ -20,7 +22,7 @@ class CustomerHomeOrderConfirmController extends BaseController {
   final Map<String, dynamic> oderStartData;
   final Map tableData;
   CustomerHomeOrderConfirmState showing = CustomerHomeOrderConfirmState.start;
-
+  final bool? canPop;
   num paid = 0;
   Map<String, int> counter = {};
   Map<String, dynamic> orderMore = {};
@@ -29,6 +31,7 @@ class CustomerHomeOrderConfirmController extends BaseController {
   BuildContext context;
   CustomerHomeOrderConfirmController(
     this.context, {
+    this.canPop,
     required this.oderStartData,
     required this.tableData,
   });
@@ -36,6 +39,7 @@ class CustomerHomeOrderConfirmController extends BaseController {
   void onInit() {
     fetchMenuAsMap();
     loadOrdered(context);
+    _startCountdown();
     super.onInit();
   }
 
@@ -121,6 +125,32 @@ class CustomerHomeOrderConfirmController extends BaseController {
   String orderId = '';
   String paymentUrl = '';
 
+  bool showHuyMon = false;
+
+  late Timer _timer;
+  Duration remaining = Duration.zero;
+  final DateTime pastTime = DateTime.now()
+      .subtract(Duration(minutes: 3)); // 🕒 Ví dụ: mốc 3 phút trước
+
+  void _startCountdown() {
+    _timer = Timer.periodic(Duration(seconds: 1), (_) {
+      final endTime = pastTime.add(Duration(minutes: 5));
+      final now = DateTime.now();
+      final diff = endTime.difference(now);
+      remaining = diff.isNegative ? Duration.zero : diff;
+      update();
+      if (diff.isNegative) {
+        _timer.cancel();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   Future<void> thanhToan(
       {required Function() onSuccess, required Function() onFail}) async {
     showLoading();
@@ -141,6 +171,43 @@ class CustomerHomeOrderConfirmController extends BaseController {
     onSuccess();
   }
 
+  Future<void> confirmHuyOrder() async {
+    try {
+      showLoading();
+      await saveLocal(
+          'order',
+          jsonEncode({
+            'table': (tableData),
+            'orderData': oderStartData,
+            'total': getSoTienCanPay()
+          }));
+      final response = await dio.post(
+        '/order/update',
+        data: {
+          'orderId': currentOrderId,
+          'items': oderStartData.values.toList(),
+        },
+      );
+      hireLoading();
+      if (response.statusCode == 200 && response.data['status'] == 'success') {
+        final orderId = response.data['orderId'];
+        // currentOrderId = orderId;
+        showing = CustomerHomeOrderConfirmState.start;
+        update();
+        if (Get.context != null)
+          ScaffoldMessenger.of(Get.context!).sendMessage('Hủy món thành công');
+      }
+    } catch (e) {
+      hireLoading();
+      if (Get.context != null)
+        ScaffoldMessenger.of(Get.context!).sendMessage(
+            'Hủy món thất bại! Vui lòng liên hệ nhân viên để được hỗ trợ');
+
+      print('❌ Error placing order: $e');
+      // TODO: show error to user
+    }
+  }
+
   Future<void> orderMoreStart() async {
     //todo:gop order more vao order data
 
@@ -152,6 +219,7 @@ class CustomerHomeOrderConfirmController extends BaseController {
       } else {
         oderStartData[key] = orderMore[key];
       }
+      oderStartData[key]['order_time'] = orderMore[key]['order_time'];
     }
     //todo:cap nhat don order vao csdl
     try {
@@ -239,12 +307,17 @@ class CustomerHomeOrderConfirmController extends BaseController {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const CustomerHomeOrderConfirmSuccessPage(),
+          builder: (context) => CustomerHomeOrderConfirmSuccessPage(
+            canPop: canPop,
+          ),
         ),
         // (route) => false,
       );
     }
   }
 
-  void moneyPay() {}
+  void moneyPay() {
+    showing = CustomerHomeOrderConfirmState.goiNhanVienThanhCong;
+    update();
+  }
 }

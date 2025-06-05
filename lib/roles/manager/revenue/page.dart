@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kichikichi/core/imports/imports.dart';
 
 class RevenuePage extends StatefulWidget {
   const RevenuePage({super.key});
@@ -89,7 +89,7 @@ class _RevenuePageState extends State<RevenuePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Doanh thu theo ngày'),
+        title: const Text('Thống kê doanh thu'),
         actions: [
           IconButton(
             icon: const Icon(Icons.date_range),
@@ -116,14 +116,48 @@ class _RevenuePageState extends State<RevenuePage> {
                   const SizedBox(height: 8),
                   ...orders.map((doc) {
                     final data = doc.data() as Map<String, dynamic>;
-                    return Card(
-                      child: ListTile(
-                        title: Text("Bàn: ${data['tableNumber']}"),
-                        subtitle: Text("Trạng thái: ${data['status']}"),
-                        trailing: Text("${data['totalAmount']} ₫"),
+                    return InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            final items = data['items'];
+                            return SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(data.toString()),
+                                  Text('Bàn: ${data['tableNumber'] ?? '--'}'),
+                                  if (items is List)
+                                    ListView(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: AppSize.paddingSmall),
+                                      shrinkWrap: true,
+                                      children: List.generate(
+                                        items.length,
+                                        (index) {
+                                          return item(items[index], 1);
+                                        },
+                                      ),
+                                    )
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: Card(
+                        child: ListTile(
+                          title: Text(data['createdAt'] != null
+                              ? timeParse('${data['createdAt']}')
+                              : '--'),
+                          subtitle: Text(
+                              "Trạng thái: ${data['status'] == 'onlinePaid' ? "Thanh toán trực tuyến" : 'Tiền mặt'}"),
+                          trailing: Text("${data['totalAmount']} vn₫"),
+                        ),
                       ),
                     );
-                  }).toList(),
+                  }),
                   if (orders.isEmpty)
                     const Center(
                       child: Padding(
@@ -135,5 +169,74 @@ class _RevenuePageState extends State<RevenuePage> {
               ),
             ),
     );
+  }
+
+  String timeParse(String raw) {
+    if (raw.length != 14 || !RegExp(r'^\d{14}$').hasMatch(raw)) {
+      return '--';
+    }
+
+    try {
+      int year = int.parse(raw.substring(0, 4));
+      int month = int.parse(raw.substring(4, 6));
+      int day = int.parse(raw.substring(6, 8));
+      int hour = int.parse(raw.substring(8, 10));
+      int minute = int.parse(raw.substring(10, 12));
+      int second = int.parse(raw.substring(12, 14));
+
+      // Kiểm tra giá trị hợp lệ cơ bản
+      if (month < 1 ||
+          month > 12 ||
+          day < 1 ||
+          day > 31 ||
+          hour < 0 ||
+          hour > 23 ||
+          minute < 0 ||
+          minute > 59 ||
+          second < 0 ||
+          second > 59) {
+        return '--';
+      }
+
+      final dateTime = DateTime(year, month, day, hour, minute, second);
+      return 'Ngày ${dateTime.day.toString().padLeft(2, '0')}'
+          ' tháng${dateTime.month.toString().padLeft(2, '0')}'
+          ' -- ${dateTime.hour.toString().padLeft(2, '0')}:'
+          '${dateTime.minute.toString().padLeft(2, '0')}';
+    } catch (_) {
+      return '--';
+    }
+  }
+
+  Widget item(Map m, int e) {
+    return Row(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: ImageViewer(
+            m['image'] is List ? m['image'][0] : m['image'],
+            height: 50,
+            width: 50,
+          ),
+        ),
+        AppSize.paddingSmall.w,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppTextStyles.bodyText.text(m['name']),
+              AppTextStyles.bodyText.text(m['price'].toString()),
+            ],
+          ),
+        ),
+        Center(
+          child: Text('x${m['count']}'),
+        )
+      ],
+    ).padSymmetric(v: 8).animate().fadeIn(duration: 300.ms).slide(
+          begin: const Offset(-2, 0),
+          end: const Offset(0, 0),
+          duration: 250.ms + 90.ms * e,
+        );
   }
 }

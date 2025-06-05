@@ -49,19 +49,24 @@ class CustomerHomePreorderController extends BaseController {
           "arrivalTime":
               DateTimeUtils.parse(fields['pickupTime']).toIso8601String(),
         });
-      } catch (e) {}
-
-      card = {
-        'code': 'a',
-        'name': fields['name'],
-        'phone': fields['phone'],
-        'count': fields['count'],
-        'pickupTime': fields['pickupTime'],
-      };
-      await saveLocal('card', jsonEncode(card));
-      hireLoading();
-      showing = CustomerHomePreorderControllerState.thanhcong;
-      update();
+        if (response.data['orderId'] != null) {
+          card = {
+            'code': '${response.data['orderId']}',
+            'name': fields['name'],
+            'phone': fields['phone'],
+            'count': fields['count'],
+            'pickupTime': fields['pickupTime'],
+          };
+          await saveLocal('card', jsonEncode(card));
+          hireLoading();
+          showing = CustomerHomePreorderControllerState.thanhcong;
+          update();
+        }
+      } catch (e) {
+        hireLoading();
+        showing = CustomerHomePreorderControllerState.thatbai;
+        update();
+      }
     }
   }
 
@@ -70,8 +75,13 @@ class CustomerHomePreorderController extends BaseController {
     if (tempCard != null) {
       card = jsonDecode(tempCard);
       showing = CustomerHomePreorderControllerState.chitiet;
+
+      fields['code'] = card['code'];
+      fields['name'] = card['name'];
+      fields['phone'] = card['phone'];
+      fields['count'] = card['count'];
+      fields['pickupTime'] = card['pickupTime'];
       update();
-      print(tempCard + "loca");
     }
   }
 

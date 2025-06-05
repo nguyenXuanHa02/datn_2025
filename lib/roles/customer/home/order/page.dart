@@ -40,9 +40,12 @@ class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
                           try {
                             var gems = item;
                             gems['count'] = count.toString();
+                            gems['order_time'] =
+                                DateTime.now().toIso8601String();
                             counter[item['id']] =
                                 int.parse((item['price']).toString()) * count;
                             order[item['id']] = gems;
+
                             int temp = 0;
                             for (var element in counter.values) {
                               temp += element;
@@ -95,7 +98,7 @@ class _CustomerHomeOrderState extends State<CustomerHomeOrder> {
 
                               // print(getLocalOrder);
                               if (context.mounted) {
-                                Navigator.of(context).pushReplacement(
+                                Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) =>
                                         CustomerHomeConfirmPage(

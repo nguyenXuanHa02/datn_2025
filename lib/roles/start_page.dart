@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:kichikichi/commons/bloc/baseController.dart';
 import 'package:kichikichi/roles/account/controller.dart';
 import 'package:kichikichi/roles/account/page.dart';
@@ -21,8 +23,11 @@ class _CustomerStartPageState extends State<CustomerStartPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (!Get.isRegistered<AccountController>()) {
+      Get.put<AccountController>(AccountController());
+    }
     return BaseScaffold<AccountController>(
-      init: AccountController()..loadOrder(context),
+      init: AccountController(),
       showLoading: false,
       (p0) {
         return Scaffold(

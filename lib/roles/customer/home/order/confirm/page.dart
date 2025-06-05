@@ -11,6 +11,7 @@ class CustomerHomeConfirmPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final notAllowBack = data['notAllowBack'];
     final orderData = (data['orderData'] as Map<String, dynamic>);
     // clearLocal(
     //   'order',
@@ -20,6 +21,7 @@ class CustomerHomeConfirmPage extends StatelessWidget {
             oderStartData: orderData, tableData: data['table']),
         builder: (controller) {
           return BaseScaffold<CustomerHomeOrderConfirmController>(
+            canPop: notAllowBack ?? true,
             (p0) => Scaffold(
               appBar: Header(
                 title: data['table']['table_label'].toString() ?? 'Ban so 1',
@@ -40,7 +42,7 @@ class CustomerHomeConfirmPage extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      AppTextStyles.heading2.text('Total: '),
+                      AppTextStyles.heading2.text('Tổng thanh toán: '),
                       AppTextStyles.heading2.text('${data["total"]} vnd')
                     ],
                   )
@@ -53,18 +55,19 @@ class CustomerHomeConfirmPage extends StatelessWidget {
                         child: RoundedButton.text(
                           'Gọi món',
                           () {
-                            controller.order(
-                                onSuccess: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const CustomerHomeOrderConfirmSuccessPage(),
-                                    ),
-                                    // (route) => false,
-                                  );
-                                },
-                                onFail: () {});
+                            controller.order(onSuccess: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const CustomerHomeOrderConfirmSuccessPage(),
+                                ),
+                                // (route) => false,
+                              );
+                            }, onFail: () {
+                              ScaffoldMessenger.of(context).sendMessage(
+                                  'Vui lòng kiểm tra lại kết nối mạng');
+                            });
                           },
                         )
                             .animate()

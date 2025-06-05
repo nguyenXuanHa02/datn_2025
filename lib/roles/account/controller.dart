@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 import 'package:kichikichi/commons/bloc/baseController.dart';
 import 'package:kichikichi/core/imports/imports.dart';
 import 'package:kichikichi/roles/customer/home/order/confirm/page.dart';
@@ -13,6 +14,7 @@ class AccountController extends BaseController {
   @override
   void onInit() {
     loadAccount();
+    loadOrder();
 
     super.onInit();
   }
@@ -148,19 +150,21 @@ class AccountController extends BaseController {
     update();
   }
 
-  Future<void> loadOrder(BuildContext context) async {
+  Future<void> loadOrder() async {
     final order = await getLocal(
       'order',
     );
+    final context = Get.context;
 
-    if (order is String && context.mounted) {
+    if (order is String && context != null) {
       final Map<String, dynamic> orderData = jsonDecode(order);
       // print(orderData);
       print(
           '${(orderData['orderData'] as Map).values.first['count'].runtimeType}');
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => CustomerHomeConfirmPage(data: orderData),
+          builder: (context) => CustomerHomeConfirmPage(
+              data: orderData..addAll({'notAllowBack': false})),
         ),
       );
     }
